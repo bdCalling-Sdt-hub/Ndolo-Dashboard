@@ -129,7 +129,7 @@ const Login = () => {
             {/* Error Message */}
             <p className="text-red-500 font-medium">{error}</p>
 
-            <div className="mb-4">
+            <Link to={'/dashboard'} className="mb-4">
               {/* Submit Button */}
               <Form.Item>
                 <Button
@@ -140,7 +140,7 @@ const Login = () => {
                   Log in
                 </Button>
               </Form.Item>
-            </div>
+            </Link>
           </Form>
         </div>
       </div>
