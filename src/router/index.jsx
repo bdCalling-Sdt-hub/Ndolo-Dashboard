@@ -16,6 +16,7 @@ import ApprovedUsers from "../dashboardMenu/sidebarMenu/ApprovedUsers";
 import ErrorPage from "./ErrorPage";
 import AboutUs from "../dashboardMenu/sidebarMenu/settings/AboutUs/AboutUs";
 import EditAboutUs from "../dashboardMenu/sidebarMenu/settings/AboutUs/EditAboutUs";
+import Admins from "../dashboardMenu/sidebarMenu/Admins/Admins";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
       {
         path: "userslist",
         element: <ApprovedUsers />,
+      },
+      {
+        path: "admins",
+        element: <Admins />,
       },
       {
         path: "settings",

@@ -105,6 +105,18 @@ const Sidebar = () => {
               <span className="hidden ml-2 sm:block">My Profile</span>
             </NavLink>
 
+            <NavLink
+              to="admins"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-normal p-[10px]   m-[6px] rounded-lg"
+              }
+            >
+              <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
+              <span className="hidden ml-2 sm:block">Add Admins</span>
+            </NavLink>
+
             {/* <NavLink
               to="subscription"
               className={({ isActive }) =>
