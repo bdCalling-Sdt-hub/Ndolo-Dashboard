@@ -60,7 +60,7 @@ const Sidebar = () => {
   return (
     <div className="lg:w-[250px] xl:w-[300px] md:w-[200px] sm:w-[120px] w-[70px] flex flex-col justify-between bg-[#ece6ee] h-full min-h-screen rounded-md">
       <div>
-        <Link to={'/dashboard'} className="p-[5px] grid justify-items-stretch  sm:p-[16px]">
+        <Link to={'/dashboard/home'} className="p-[5px] grid justify-items-stretch  sm:p-[16px]">
           <img
             className="w-full sm:w-3/4 mx-auto  rounded-lg justify-self-center"
             src={logo}
@@ -85,8 +85,8 @@ const Sidebar = () => {
               to="userslist"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-normal p-[10px]  m-[6px] rounded-lg"
+                   ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
               }
             >
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -98,7 +98,7 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-normal p-[10px]   m-[6px] rounded-lg"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
               }
             >
               <FaRegUser className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -110,7 +110,7 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-normal p-[10px]   m-[6px] rounded-lg"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
               }
             >
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -133,8 +133,8 @@ const Sidebar = () => {
               to="settings"
               className={({ isActive }) =>
                 isActive
-                  ? "flex p-[10px] m-[6px] cursor-pointer items-center text-[18px] font-medium bg-[#FFFFFF] text-[#193664] rounded-lg"
-                  : "flex text-[#430750] p-[10px] m-[6px] cursor-pointer items-center text-[18px] font-normal rounded-lg"
+                   ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
               }
             >
               <CiSettings className="h-8 w-8 lg:h-5 lg:w-5" />
