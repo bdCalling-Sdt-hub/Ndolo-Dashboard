@@ -21,7 +21,7 @@ import { BiSolidDashboard } from "react-icons/bi";
 import { HiDocumentReport, HiLogout } from "react-icons/hi";
 import { AiOutlineSafetyCertificate } from "react-icons/ai";
 import { PiGitPullRequestDuotone } from "react-icons/pi";
-import { RiSecurePaymentFill, RiShieldCheckLine } from "react-icons/ri";
+import { RiLockPasswordLine, RiSecurePaymentFill, RiShieldCheckLine } from "react-icons/ri";
 import { CiSettings } from "react-icons/ci";
 import Swal from "sweetalert2";
 import { SiMagento } from "react-icons/si";
@@ -116,6 +116,17 @@ const Sidebar = () => {
             >
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
               <span className="hidden ml-2 sm:block">Add Admins</span>
+            </NavLink>
+            <NavLink
+              to="adminchangepassword"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
+              }
+            >
+              <RiLockPasswordLine className="h-7 w-7 lg:h-5 lg:w-5" />
+              <span className="hidden ml-2 sm:block"> Admins Request</span>
             </NavLink>
 
             {/* <NavLink

@@ -279,6 +279,17 @@ const Admins = () => {
                         >
                             <Input placeholder="Enter phone number" />
                         </Form.Item>
+
+                        <div className='flex gap-5 my-5'>
+                            <label htmlFor="superAdmin">
+                                <input type="radio" name="superAdmin" id="superAdmin" />
+                                <span className='ml-2 text-[#3d1852] font-semibold'>Super Admin</span>
+                            </label>
+                            <label htmlFor="normalAdmin">
+                                <input type="radio" name="superAdmin" id="normalAdmin" />
+                                <span className='ml-2 text-[#3d1852] font-semibold'>Normal Admin</span>
+                            </label>
+                        </div>
                         <Form.Item
                             label="Join Date"
                             name="joinDate"
