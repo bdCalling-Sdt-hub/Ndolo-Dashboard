@@ -1,3 +1,4 @@
+
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "./../../public/image/logo.png";
 
@@ -25,7 +26,7 @@ import { CiSettings } from "react-icons/ci";
 import Swal from "sweetalert2";
 import { SiMagento } from "react-icons/si";
 import { BsCardChecklist, BsExclude } from "react-icons/bs";
-import { ImUserPlus } from "react-icons/im"; 
+import { ImUserPlus } from "react-icons/im";
 import { IoIosLogOut } from "react-icons/io";
 
 
@@ -67,14 +68,14 @@ const Sidebar = () => {
             alt="Logo"
           />
         </Link>
-        <div className="sm:ml-5">
+        <div className="">
           <ul>
             <NavLink
               to="home"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
               }
             >
               <BiSolidDashboard className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -85,8 +86,8 @@ const Sidebar = () => {
               to="userslist"
               className={({ isActive }) =>
                 isActive
-                   ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
               }
             >
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -97,8 +98,8 @@ const Sidebar = () => {
               to="profile"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
               }
             >
               <FaRegUser className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -109,8 +110,8 @@ const Sidebar = () => {
               to="admins"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
               }
             >
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -133,8 +134,8 @@ const Sidebar = () => {
               to="settings"
               className={({ isActive }) =>
                 isActive
-                   ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#FFFFFF] text-[#193664] m-[6px] rounded-lg"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
               }
             >
               <CiSettings className="h-8 w-8 lg:h-5 lg:w-5" />
@@ -143,7 +144,7 @@ const Sidebar = () => {
             <div className="mt-5">
               <div
                 onClick={handleLogOut}
-                className="flex items-center ml-[18px] cursor-pointer gap-2 text-[#eb5757] font-medium"
+                className="flex items-center ml-12 cursor-pointer gap-2 text-[#eb5757] font-medium"
               >
                 <IoIosLogOut className="h-8 w-8 lg:h-5 font-bold lg:w-5" />
                 <span className="hidden sm:block font-semibold">Log Out</span>
