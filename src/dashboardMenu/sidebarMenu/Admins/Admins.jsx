@@ -229,6 +229,14 @@ const Admins = () => {
                                     <span>Joining date</span>
                                     <span>{selectedUser.joinDate}</span>
                                 </div>
+                                <div className="mt-10 flex justify-center gap-5 items-center">
+                                    <button className="bg-[#430750] text-white py-2 rounded-xl px-8 font-semibold">
+                                        Block
+                                    </button>
+                                    <button className="border-[#430750] border-[1px] text-[#430750] py-2 rounded-xl px-8 font-semibold">
+                                        Unblock
+                                    </button>
+                                </div>
                             </>
                         )}
                     </div>
@@ -240,7 +248,7 @@ const Admins = () => {
                     onCancel={closeAddAdminModal}
                     centered
                     footer={null}
-                    
+
                 >
                     <h2 className='text-2xl font-semibold mb-10'>Add New Admin</h2>
                     <Form

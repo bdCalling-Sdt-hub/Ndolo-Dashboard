@@ -128,11 +128,11 @@ const Header = () => {
       <div className="grid lg:grid-cols-3 gap-5">
         <div className="lg:col-span-2 md:flex justify-between items-center bg-[#ece6ee] sm:p-8 p-5 rounded-xl">
           <div>
-            <div className="flex items-center justify-center gap-2 mb-5">
-              <p className="text-3xl font-semibold text-[#430750] ">Welcome,</p>
+            <div className="flex items-center justify-center gap-1 mb-2">
+              <p className="text-3xl font-semibold text-[#430750]">Welcome,</p>
               <h1>{profile?.data?.attributes?.name}</h1>
             </div>
-            <p className="sm:text-left text-center">Have a nice day at work</p>
+            <p className="sm:text-left text-center text-xl text-gray-500">Have a nice day at work</p>
           </div>
           <div className="sm:block hidden">
             <img className="max-w-48 mx-auto" src={dashboard_welcome_Image} alt="" />
@@ -142,8 +142,8 @@ const Header = () => {
         <div className=" lg:col-span-1 flex items-center justify-between sm:flex-row flex-col gap-5 bg-[#ece6ee] p-8 rounded-xl">
           <img className="w-14 rounded-full" src={User_profile_image} alt="" />
           <div className="sm:text-right text-center">
-              <h3 className="text-xl font-semibold text-[#430750]">Jane Cooper</h3>
-              <p>Admin</p>
+              <h3 className="text-2xl font-semibold text-[#430750]">Jane Cooper</h3>
+              <p className="font-semibold">Supper Admin</p>
           </div>
         </div>
       </div>

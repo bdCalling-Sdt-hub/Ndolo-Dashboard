@@ -1,8 +1,10 @@
-import { DatePicker, Modal, Table, Tooltip } from "antd";
+import { DatePicker, message, Modal, Table, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import moment from "moment"; // To handle date comparison
+import { MdDeleteForever } from "react-icons/md";
+import { toast, ToastContainer } from "react-toastify";
 
 const ApprovedUsers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,12 +59,15 @@ const ApprovedUsers = () => {
       title: "Action",
       key: "action",
       render: (text, record) => (
-        <Tooltip title="More Info">
-          <InfoCircleOutlined
-            onClick={() => showModal(record)}
-            style={{ color: "#5c3c92", fontSize: "18px", cursor: "pointer" }}
-          />
-        </Tooltip>
+        <div className="flex gap-5 items-center">
+          <Tooltip title="More Info">
+            <InfoCircleOutlined
+              onClick={() => showModal(record)}
+              style={{ color: "#5c3c92", fontSize: "20px", cursor: "pointer" }}
+            />
+          </Tooltip>
+          <button onClick={handleDelete} className="bg-red-600 text-white w-8 h-8 rounded-full flex justify-center items-center gap-1"><MdDeleteForever className="text-white text-2xl" /></button>
+        </div>
       ),
     },
   ];
@@ -119,7 +124,7 @@ const ApprovedUsers = () => {
       phoneNumber: "1234567890",
       joinDate: "24 Apr 2024",
     },
-  ];  
+  ];
 
   // Filtered data based on search query and selected date
   const filteredData = data.filter((item) => {
@@ -134,8 +139,49 @@ const ApprovedUsers = () => {
     return matchesSearchQuery && matchesDate;
   });
 
+
+  const handleDelete = () => {
+
+    swal({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+      function () {
+        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+      });
+    // toast.success('User deleted successfully', {
+    //   position: "top-right",
+    //   autoClose: 5000,
+    //   hideProgressBar: false,
+    //   closeOnClick: false,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "colored"
+    //   });
+
+  };
+
   return (
     <div className="sm:px-5">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
       <div className="p-5 bg-[#ece6ee] rounded-md mt-5">
         <div className="md:flex justify-between mb-5 items-center">
           <h3 className="font-semibold">User List</h3>
@@ -207,6 +253,14 @@ const ApprovedUsers = () => {
                 <div className="flex justify-between items-center mt-5 font-semibold">
                   <span>Joining date</span>
                   <span>{selectedUser.joinDate}</span>
+                </div>
+                <div className="mt-10 flex justify-center gap-5 items-center">
+                  <button className="bg-[#430750] text-white py-2 rounded-xl px-8 font-semibold">
+                    Block
+                  </button>
+                  <button className="border-[#430750] border-[1px] text-[#430750] py-2 rounded-xl px-8 font-semibold">
+                    Unblock
+                  </button>
                 </div>
               </>
             )}
