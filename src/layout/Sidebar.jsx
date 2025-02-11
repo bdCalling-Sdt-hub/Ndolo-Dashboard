@@ -74,8 +74,8 @@ const Sidebar = () => {
               to="home"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg md:pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg md:pl-10"
               }
             >
               <BiSolidDashboard className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -86,8 +86,8 @@ const Sidebar = () => {
               to="userslist"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg md:pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg md:pl-10"
               }
             >
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -98,8 +98,8 @@ const Sidebar = () => {
               to="profile"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg md:pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg md:pl-10"
               }
             >
               <FaRegUser className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -110,8 +110,8 @@ const Sidebar = () => {
               to="admins"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg md:pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg md:pl-10"
               }
             >
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -121,8 +121,8 @@ const Sidebar = () => {
               to="adminchangepassword"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg md:pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg md:pl-10"
               }
             >
               <RiLockPasswordLine className="h-7 w-7 lg:h-5 lg:w-5" />
@@ -145,8 +145,8 @@ const Sidebar = () => {
               to="settings"
               className={({ isActive }) =>
                 isActive
-                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg pl-10"
-                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg pl-10"
+                  ? "flex cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#430750] text-[#fff] m-[6px] rounded-lg md:pl-10"
+                  : "flex text-[#430750] cursor-pointer items-center text-[18px] font-medium p-[10px] m-[6px] rounded-lg md:pl-10"
               }
             >
               <CiSettings className="h-8 w-8 lg:h-5 lg:w-5" />
@@ -155,7 +155,7 @@ const Sidebar = () => {
             <div className="mt-5">
               <div
                 onClick={handleLogOut}
-                className="flex items-center ml-12 cursor-pointer gap-2 text-[#eb5757] font-medium"
+                className="flex items-center md:ml-12 ml-5 cursor-pointer gap-2 text-[#eb5757] font-medium"
               >
                 <IoIosLogOut className="h-8 w-8 lg:h-5 font-bold lg:w-5" />
                 <span className="hidden sm:block font-semibold">Log Out</span>
