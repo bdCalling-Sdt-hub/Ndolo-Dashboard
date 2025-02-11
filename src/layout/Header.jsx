@@ -143,7 +143,7 @@ const Header = () => {
           <img className="w-14 rounded-full" src={User_profile_image} alt="" />
           <div className="sm:text-right text-center">
               <h3 className="text-2xl font-semibold text-[#430750]">Jane Cooper</h3>
-              <p className="font-semibold">Supper Admin</p>
+              <p className="font-semibold">Super Admin</p>
           </div>
         </div>
       </div>

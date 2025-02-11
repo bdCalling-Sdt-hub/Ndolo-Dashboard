@@ -5,6 +5,10 @@ import { IoSearchOutline } from "react-icons/io5";
 import moment from "moment"; // To handle date comparison
 import { MdDeleteForever } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
+import { TbAlertTriangle } from "react-icons/tb";
+import { Link } from "react-router-dom";
+import { FiAlertTriangle } from "react-icons/fi";
+
 
 const ApprovedUsers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,14 +63,15 @@ const ApprovedUsers = () => {
       title: "Action",
       key: "action",
       render: (text, record) => (
-        <div className="flex gap-5 items-center">
+        <div className="flex gap-5 items-center  ">
           <Tooltip title="More Info">
             <InfoCircleOutlined
               onClick={() => showModal(record)}
-              style={{ color: "#5c3c92", fontSize: "20px", cursor: "pointer" }}
+              style={{ color: "#5c3c92", fontSize: "28px", cursor: "pointer" }}
             />
           </Tooltip>
-          <button onClick={handleDelete} className="bg-red-600 text-white w-8 h-8 rounded-full flex justify-center items-center gap-1"><MdDeleteForever className="text-white text-2xl" /></button>
+          <button onClick={handleDelete} className="bg-[#8f1b07] text-white p-2 rounded-xl flex justify-center items-center gap-1"><MdDeleteForever className="text-white text-2xl" /></button>
+          <Link target="_blank" to={`https://mail.google.com/mail/u/0/?fs=1&to=nimurnerob404@gmail.com&tf=cm`} className="bg-[#8f1b07] text-white hover:text-white p-2 rounded-xl  font-semibold flex items-center justify-center gap-1"><FiAlertTriangle className="text-white text-2xl" /></Link>
         </div>
       ),
     },
@@ -261,6 +266,7 @@ const ApprovedUsers = () => {
                   <button className="border-[#430750] border-[1px] text-[#430750] py-2 rounded-xl px-8 font-semibold">
                     Unblock
                   </button>
+
                 </div>
               </>
             )}

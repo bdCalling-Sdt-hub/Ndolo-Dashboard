@@ -98,7 +98,7 @@ const RecentUser = ({ state }) => {
 
   return (
     <div className="p-5 bg-[#ece6ee] rounded-md mt-5">
-      <h3 className="mb-5 font-semibold text-xl">{state}</h3>
+      <h3 className="mb-5 font-semibold text-xl">{state} <sup className="text-sm">( Last 7 days )</sup></h3>
 
 
       {/* Display Table with Search Results */}
