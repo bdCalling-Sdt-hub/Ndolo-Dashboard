@@ -60,7 +60,7 @@ const RecentUser = ({ state }) => {
         <Tooltip title="More Info">
           <InfoCircleOutlined
             onClick={showModal}
-            style={{ color: "#5c3c92", fontSize: "18px", cursor: "pointer" }}
+            style={{ color: "#5c3c92", fontSize: "28px", cursor: "pointer" }}
           />
         </Tooltip>
       ),

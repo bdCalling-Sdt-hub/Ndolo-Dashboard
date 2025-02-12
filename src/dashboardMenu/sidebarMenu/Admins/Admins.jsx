@@ -4,6 +4,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { IoSearchOutline } from "react-icons/io5";
 import moment from "moment"; // To handle date comparison
 import { FiPlus } from 'react-icons/fi';
+import { MdDeleteForever } from 'react-icons/md';
 
 const Admins = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,12 +68,15 @@ const Admins = () => {
             title: "Action",
             key: "action",
             render: (text, record) => (
-                <Tooltip title="More Info">
-                    <InfoCircleOutlined
-                        onClick={() => showModal(record)}
-                        style={{ color: "#5c3c92", fontSize: "18px", cursor: "pointer" }}
-                    />
-                </Tooltip>
+                <div className='flex gap-5 items-center '>
+                    <Tooltip title="More Info">
+                        <InfoCircleOutlined
+                            onClick={() => showModal(record)}
+                            style={{ color: "#5c3c92", fontSize: "28px", cursor: "pointer" }}
+                        />
+                    </Tooltip>
+                    <button onClick={handleDelete} className="bg-[#8f1b07] text-white p-2 rounded-xl flex justify-center items-center gap-1"><MdDeleteForever className="text-white text-2xl" /></button>
+                </div>
             ),
         },
     ];
@@ -143,6 +147,34 @@ const Admins = () => {
 
         return matchesSearchQuery && matchesDate;
     });
+
+
+    const handleDelete = () => {
+
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+            function () {
+                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            });
+        // toast.success('User deleted successfully', {
+        //   position: "top-right",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: false,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "colored"
+        //   });
+
+    };
 
     return (
         <div className="md:p-4 mt-5 sm:mt-0">

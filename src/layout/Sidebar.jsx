@@ -94,7 +94,7 @@ const Sidebar = () => {
               <span className="hidden ml-2 sm:block">Users</span>
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               to="profile"
               className={({ isActive }) =>
                 isActive
@@ -104,7 +104,7 @@ const Sidebar = () => {
             >
               <FaRegUser className="h-7 w-7 lg:h-5 lg:w-5" />
               <span className="hidden ml-2 sm:block">My Profile</span>
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="admins"

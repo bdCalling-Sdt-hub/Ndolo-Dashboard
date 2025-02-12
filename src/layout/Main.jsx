@@ -14,7 +14,7 @@ const Main = () => {
             <Header />
           </div>
           
-          <div className="overflow-y-auto sm:ml-8 h-full flex-1 lg:pt-[50px] xl:pt-[70px] pt-[220px] lg:pl-[220px] xl:pl-[280px] md:pl-[170px] sm:pl-[90px] pl-[80px] mt-28 ">
+          <div className="overflow-y-auto sm:ml-8 h-full flex-1 lg:pt-[50px] xl:pt-[70px] pt-[220px] lg:pl-[220px] xl:pl-[280px] md:pl-[170px] sm:pl-[90px] pl-[80px] md:mt-10 ">
             <Outlet />
           </div>
         </div>

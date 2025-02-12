@@ -100,9 +100,8 @@ const Header = () => {
 
   const menu = (
     <Menu
-      className={`transition ease-in-out duration-300 transform ${
-        menuVisible ? "custom-dropdown-menu-visible" : "custom-dropdown-menu"
-      }`}
+      className={`transition ease-in-out duration-300 transform ${menuVisible ? "custom-dropdown-menu-visible" : "custom-dropdown-menu"
+        }`}
     >
       <Menu.Item className=" hover:!bg-[#101625]" key="1">
         <Link to="/dashboard/profile" className=" hover:!text-white">
@@ -123,31 +122,30 @@ const Header = () => {
   );
 
   return (
-    <div className="sm:w-auto w-full mb-[24px] rounded-md bg-white">
+    <div className="sm:w-auto w-full rounded-md bg-white">
       <Toaster reverseOrder={false} />
-      <div className="grid lg:grid-cols-3 gap-5">
-        <div className="lg:col-span-2 md:flex justify-between items-center bg-[#ece6ee] sm:p-8 p-5 rounded-xl">
+      <div className="flex bg-[#ece6ee] rounded-lg">
+        <div className="w-full hidden md:flex justify-between items-center  sm:p-5 p-5 ">
           <div>
-            <div className="flex items-center justify-center gap-1 mb-2">
+            <div className="flex items-center justify-start gap-1 mb-2">
               <p className="text-3xl font-semibold text-[#430750]">Welcome,</p>
               <h1>{profile?.data?.attributes?.name}</h1>
             </div>
             <p className="sm:text-left text-center text-xl text-gray-500">Have a nice day at work</p>
           </div>
-          <div className="sm:block hidden">
+          {/* <div className="sm:block hidden">
             <img className="max-w-48 mx-auto" src={dashboard_welcome_Image} alt="" />
-          </div>
+          </div> */}
         </div>
-
-        <div className=" lg:col-span-1 flex items-center justify-between sm:flex-row flex-col gap-5 bg-[#ece6ee] p-8 rounded-xl">
-          <img className="w-14 rounded-full" src={User_profile_image} alt="" />
+        <Link to={"/dashboard/profile"} className=" lg:col-span-1 flex items-center md:justify-end sm:flex-row flex-col gap-5  p-5 min-w-96 cursor-pointer">
           <div className="sm:text-right text-center">
-              <h3 className="text-2xl font-semibold text-[#430750]">Jane Cooper</h3>
-              <p className="font-semibold">Super Admin</p>
+            <h3 className="text-2xl font-semibold text-[#430750]">Jane Cooper</h3>
+            <p className="font-semibold">Super Admin</p>
           </div>
-        </div>
+          <img className="w-14 rounded-full border-4 border-[#430750]" src={User_profile_image} alt="" />
+        </Link>
       </div>
-      
+
     </div>
   );
 };
