@@ -8,6 +8,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { TbAlertTriangle } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { FiAlertTriangle } from "react-icons/fi";
+import { useAllUsersQuery, useBlockUserMutation } from "../../redux/features/users/users";
+import { useDeleteUserMutation } from "../../redux/features/users/deleteUser";
 
 
 const ApprovedUsers = () => {
@@ -17,6 +19,46 @@ const ApprovedUsers = () => {
   const [pageSize, setPageSize] = useState(5); // Rows per page
   const [searchQuery, setSearchQuery] = useState(""); // Search query state
   const [selectedDate, setSelectedDate] = useState(null); // Selected date for filtering
+
+  const { data: userData, isLoading, error } = useAllUsersQuery({})
+  const [blockUser] = useBlockUserMutation();
+  const user = userData?.data?.attributes?.results;
+  const [deleteuser, { isLoading: deleteLoading }] = useDeleteUserMutation();
+
+  // if (deleteLoading) {
+  //   message.loading("Deleting User...")
+  // }
+
+  const handleDelete = async (user) => {
+    // Place your delete logic here
+
+    swal({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+      async function () {
+        const id = user?.id
+        const res = await deleteuser(id).unwrap();
+        console.log(res);
+        if (res) {
+          toast.success(res?.message);
+        }
+        else {
+          console.log(res);
+          toast.error(res?.data?.message);
+        }
+        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+      });
+
+
+  };
+
+
 
   const showModal = (user) => {
     setSelectedUser(user);
@@ -41,8 +83,13 @@ const ApprovedUsers = () => {
     },
     {
       title: "User Name",
-      dataIndex: "userName",
-      key: "userName",
+      dataIndex: "fullName",
+      key: "fullName",
+      render: (text, record) => (
+        <Tooltip title={record?.fullName}>
+          <span>{text}</span>
+        </Tooltip>
+      ),
     },
     {
       title: "Email",
@@ -53,11 +100,21 @@ const ApprovedUsers = () => {
       title: "Phone Number",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
+      render: (text, record) => (
+        <span>{text ? text : "N/A"}</span>
+      )
     },
     {
       title: "Join Date",
-      dataIndex: "joinDate",
-      key: "joinDate",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text, record) => (
+        <Tooltip title={moment(record?.createdAt).format('DD MMMM YYYY')}>
+          <span>
+            {moment(record?.createdAt).format('DD MMMM YYYY')}
+          </span>
+        </Tooltip>
+      ),
     },
     {
       title: "Action",
@@ -70,107 +127,59 @@ const ApprovedUsers = () => {
               style={{ color: "#5c3c92", fontSize: "28px", cursor: "pointer" }}
             />
           </Tooltip>
-          <button onClick={handleDelete} className="bg-[#8f1b07] text-white p-2 rounded-xl flex justify-center items-center gap-1"><MdDeleteForever className="text-white text-2xl" /></button>
-          <Link target="_blank" to={`https://mail.google.com/mail/u/0/?fs=1&to=nimurnerob404@gmail.com&tf=cm`} className="bg-[#8f1b07] text-white hover:text-white p-2 rounded-xl  font-semibold flex items-center justify-center gap-1"><FiAlertTriangle className="text-white text-2xl" /></Link>
+          <button onClick={() => handleDelete(record)} className="bg-[#8f1b07] text-white p-2 rounded-xl flex justify-center items-center gap-1"><MdDeleteForever className="text-white text-2xl" /></button>
+
+          <Link target="_blank" to={`https://mail.google.com/mail/u/0/?fs=1&to=${record?.email}&tf=cm`} className="bg-[#8f1b07] text-white hover:text-white p-2 rounded-xl  font-semibold flex items-center justify-center gap-1"><FiAlertTriangle className="text-white text-2xl" /></Link>
         </div>
       ),
     },
   ];
 
-  const data = [
-    {
-      id: 1,
-      userName: "Enrique",
-      email: "abc@gmail.com",
-      phoneNumber: "12345678",
-      joinDate: "16 Apr 2024",
-      address: "2715 Ash Dr. San Jose, South Dakota 83475",
-    },
-    {
-      id: 2,
-      userName: "Sophia",
-      email: "sophia@gmail.com",
-      phoneNumber: "87654321",
-      joinDate: "20 Apr 2024",
-      address: "1234 Main St, Los Angeles, California 90012",
-    },
-    {
-      id: 3,
-      userName: "User 3",
-      email: "user3@gmail.com",
-      phoneNumber: "1234567890",
-      joinDate: "20 Apr 2024",
-    },
-    {
-      id: 4,
-      userName: "User 4",
-      email: "user4@gmail.com",
-      phoneNumber: "1234567890",
-      joinDate: "21 Apr 2024",
-    },
-    {
-      id: 5,
-      userName: "User 5",
-      email: "user5@gmail.com",
-      phoneNumber: "1234567890",
-      joinDate: "22 Apr 2024",
-    },
-    {
-      id: 6,
-      userName: "User 6",
-      email: "user6@gmail.com",
-      phoneNumber: "1234567890",
-      joinDate: "23 Apr 2024",
-    },
-    {
-      id: 7,
-      userName: "User 7",
-      email: "user7@gmail.com",
-      phoneNumber: "1234567890",
-      joinDate: "24 Apr 2024",
-    },
-  ];
 
+  const handleBlock = async (id) => {
+    try {
+      const res = await blockUser(id).unwrap();
+      console.log(res);
+      if (res?.code == 200) {
+        setIsModalOpen(false);
+        console.log(res);
+        toast.success(res?.message)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center min-h-[50vh]">
+      <div role="status">
+        <svg aria-hidden="true" class="inline w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-pink-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+          <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+        </svg>
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  }
   // Filtered data based on search query and selected date
-  const filteredData = data.filter((item) => {
+  const filteredData = user?.filter((item) => {
     const matchesSearchQuery =
-      item.userName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.email.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesDate =
-      !selectedDate ||
-      moment(item.joinDate, "DD MMM YYYY").isSame(selectedDate, "day");
+      !selectedDate || moment(item.createdAt).isSame(moment(selectedDate), "day");
+
 
     return matchesSearchQuery && matchesDate;
   });
 
 
-  const handleDelete = () => {
 
-    swal({
-      title: "Are you sure?",
-      text: "You will not be able to recover this imaginary file!",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Yes, delete it!",
-      closeOnConfirm: false
-    },
-      function () {
-        swal("Deleted!", "Your imaginary file has been deleted.", "success");
-      });
-    // toast.success('User deleted successfully', {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: false,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "colored"
-    //   });
 
-  };
+
+
 
   return (
     <div className="sm:px-5">
@@ -189,7 +198,7 @@ const ApprovedUsers = () => {
 
       <div className="p-5 bg-[#ece6ee] rounded-md mt-5">
         <div className="md:flex justify-between mb-5 items-center">
-          <h3 className="font-semibold">User List</h3>
+          <h3 className="font-semibold text-2xl">User List</h3>
           <div className="flex items-center flex-wrap gap-">
             <DatePicker
               className="p-2 rounded-full border-0"
@@ -218,7 +227,7 @@ const ApprovedUsers = () => {
               setCurrentPage(page);
               setPageSize(pageSize);
             },
-            total: filteredData.length,
+            total: filteredData?.length,
             showSizeChanger: true,
             position: ["bottomCenter"], // Center the pagination
             className: "custom-pagination", // Add a custom class for styling
@@ -241,7 +250,7 @@ const ApprovedUsers = () => {
               <>
                 <div className="flex justify-between items-center mt-5 font-semibold">
                   <span>User Name</span>
-                  <span>{selectedUser.userName}</span>
+                  <span>{selectedUser.fullName}</span>
                 </div>
                 <div className="flex justify-between items-center mt-5 font-semibold">
                   <span>Email</span>
@@ -257,15 +266,20 @@ const ApprovedUsers = () => {
                 </div>
                 <div className="flex justify-between items-center mt-5 font-semibold">
                   <span>Joining date</span>
-                  <span>{selectedUser.joinDate}</span>
+                  <span>
+                    {moment(selectedUser.joinDate).format('DD MMMM YYYY')}
+                  </span>
                 </div>
                 <div className="mt-10 flex justify-center gap-5 items-center">
-                  <button className="bg-[#430750] text-white py-2 rounded-xl px-8 font-semibold">
-                    Block
-                  </button>
-                  <button className="border-[#430750] border-[1px] text-[#430750] py-2 rounded-xl px-8 font-semibold">
-                    Unblock
-                  </button>
+                  {
+                    selectedUser?.isBlocked ?
+                      <button onClick={() => handleBlock(selectedUser.id)} className="bg-[#430750] text-white py-2 rounded-xl px-8 font-semibold">
+                        Block
+                      </button> :
+                      <button onClick={() => handleBlock(selectedUser.id)} className="border-[#430750] border-[1px] text-[#430750] py-2 rounded-xl px-8 font-semibold">
+                        Unblock
+                      </button>
+                  }
 
                 </div>
               </>

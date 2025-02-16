@@ -1,10 +1,15 @@
 import { Button, Form, Input, Modal, Typography } from "antd";
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import OTPInput from "react-otp-input";
+import { toast, ToastContainer } from "react-toastify";
+import { useChangePasswordMutation } from "../../../redux/features/settings/changePassword";
+import { useForgotPasswordMutation } from "../../../redux/features/auth/forgotPassword";
+import { useVerifyOtp2Mutation } from "../../../redux/features/auth/verifyOtp";
+import { useUpdatePasswordAdminMutation } from "../../../redux/features/auth/updatePassword";
 // import ChangePassword from "./demo";
 
 const { Text } = Typography;
@@ -17,42 +22,133 @@ const Settings = () => {
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [otp, setOtp] = useState("");
   const [form] = Form.useForm();
+  const [tempEmail, setTempEmail] = useState('')
 
 
-  console.log(otp)
+  console.log(otp, tempEmail)
   // console.log(form)
 
   const showModal = () => setIsModalOpen(true);
   const handleOk = () => setIsModalOpen(false);
   const handleCancel = () => setIsModalOpen(false);
 
-  const onFinish = (values) => {
-    console.log("Form Submitted: ", values );
-    if (isForgotPassword && !isOtpSent) {
-      // Logic for sending OTP
-      console.log("Sending OTP to:", values.email);
-      setIsOtpSent(true);
-    } else if (isForgotPassword && isOtpSent && !isOtpVerified) {
-      // Logic for verifying OTP
-      console.log("Verifying OTP:", otp);
-      setIsOtpVerified(true);
-    } else if (isOtpVerified) {
-      // Logic for resetting password
-      console.log("Resetting Password:", values.newPassword);
-      setIsModalOpen(false); // Close modal after resetting
-    } else {
-      // Logic for changing password
-      console.log("Changing Password:", values.newPassword);
-      setIsModalOpen(false); // Close modal after changing
+
+
+
+
+  const [changePassword] = useChangePasswordMutation();
+  const [forgotpassword] = useForgotPasswordMutation();
+  const [verifyOtp] = useVerifyOtp2Mutation();
+  const [updatePassword] = useUpdatePasswordAdminMutation();
+
+
+
+  const onFinish = async (values) => {
+
+
+    if (!isForgotPassword) {
+      console.log(values);
+
+      if (values.newPassword !== values.confirmYourPassword) {
+        return toast.error('New Password & confirm Password do not match');
+      }
+
+      const allFormData = {
+        newPassword: values.newPassword,
+        oldPassword: values.currentPassword,
+      }
+
+      try {
+        const res = await changePassword(allFormData).unwrap();
+        toast.success(res?.message);
+        values.newPassword = '';
+        values.currentPassword = '';
+        values.confirmYourPassword = '';
+
+        setIsModalOpen(false);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.data?.message);
+      }
     }
+    if (!isOtpSent) {
+      const email = { email: values?.email };
+      setTempEmail(values?.email)
+      try {
+        const res = await forgotpassword(email).unwrap();
+        toast.success(res?.message);
+        setIsOtpSent(true);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.data?.message);
+      }
+    }
+
+    if (!isOtpVerified) {
+
+      if (otp.length === 6) {
+        const data = {
+          email: tempEmail,
+          oneTimeCode: otp,
+        };
+        try {
+          const res = await verifyOtp(data).unwrap();
+          toast.success(res?.message);
+          // setIsModalOpen(false);
+          setIsOtpVerified(true);
+        } catch (error) {
+          console.log(error);
+          toast.error(error?.data?.message);
+        }
+      }
+
+
+    }
+    if (isOtpVerified) {
+
+      if (values.newPassword !== values.confirmPassword) {
+        return toast.error('New Password & confirm Password do not match');
+      }
+
+      const data = {
+        email: tempEmail,
+        password: values.newPassword,
+      };
+      try {
+        const res = await updatePassword(data).unwrap();
+        toast.success(res?.message);
+        setIsOtpVerified(false);
+        setIsModalOpen(false);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.data?.message);
+      }
+    }
+
+
   };
+
+
+
 
   return (
     <div className="mt-8 sm:mx-6">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <h1 className="font-semibold text-[30px]">Settings</h1>
       <div>
-      <div>
-         {/* Trigger Button */}
+        <div>
+          {/* Trigger Button */}
           <div
             onClick={showModal}
             className="mt-8 pl-4 cursor-pointer flex justify-between bg-[#F7F7F7] hover:bg-[#430750] hover:text-white rounded items-center w-full h-[75px]"
@@ -127,36 +223,33 @@ const Settings = () => {
                     <Form.Item
                       name="otp"
                       label="OTP"
-                      rules={[
-                        { required: true, message: "Please enter the OTP" },
-                      ]}
                     >
                       {/* <Input
                         placeholder="Enter OTP"
                         className="rounded-lg border-gray-300 focus:ring-2 focus:ring-purple-500 h-12"
                       /> */}
                       <div className="flex justify-center sm:justify-start items-center gap-2 outline-none focus:border-blue-400 w-full">
-                      <OTPInput
-                        value={otp}
-                        onChange={setOtp}
-                        required
-                        numInputs={6}
-                        inputStyle={{
-                          height: "52px",
-                          width: "100%", // Default full width
-                          background: "transparent",
-                          border: "1px solid #ccc",
-                          borderRadius: "10px",
-                          marginRight: "8px",
-                          outline: "none",
-                          padding: "0 12px", // Padding for better input appearance
-                        }}
-                        renderSeparator={<span className="md:w-6"> </span>}
-                        renderInput={(props) => (
-                          <input {...props} className="w-full sm:w-[55px] md:w-[60px] text-center" />
-                        )}
-                      />
-              </div>
+                        <OTPInput
+                          value={otp}
+                          onChange={setOtp}
+                          required
+                          numInputs={6}
+                          inputStyle={{
+                            height: "52px",
+                            width: "100%", // Default full width
+                            background: "transparent",
+                            border: "1px solid #ccc",
+                            borderRadius: "10px",
+                            marginRight: "8px",
+                            outline: "none",
+                            padding: "0 12px", // Padding for better input appearance
+                          }}
+                          renderSeparator={<span className="md:w-6"> </span>}
+                          renderInput={(props) => (
+                            <input {...props} className="w-full sm:w-[55px] md:w-[60px] text-center" />
+                          )}
+                        />
+                      </div>
                     </Form.Item>
                     <div className="flex justify-between">
                       <button
@@ -287,7 +380,7 @@ const Settings = () => {
                       />
                     </Form.Item>
                     <Form.Item
-                      name="re-enterYourPassword"
+                      name="confirmYourPassword"
                       label="Re-enter Your Password"
                       rules={[
                         { required: true, message: "Please enter your New Password" },
@@ -324,7 +417,7 @@ const Settings = () => {
               </Form>
             </div>
           </Modal>
-      </div>
+        </div>
 
 
         <div

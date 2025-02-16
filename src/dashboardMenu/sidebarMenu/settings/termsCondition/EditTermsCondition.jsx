@@ -7,7 +7,8 @@ import { useGetTermConditionQuery } from "../../../../redux/features/settings/ge
 
 // console.log(termsConditon?.data?.attributes?.termsText);
 // import { useTearmConditonQuery, useUpdatetermConditionMutation } from "../../../redux/api/apiSlice";
-import toast, { Toaster } from "react-hot-toast";
+// import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
 import { useUpdateTermconditionMutation } from "../../../../redux/features/settings/updateTermcondition";
 
 const EditTermsCondition = () => {
@@ -25,13 +26,14 @@ const EditTermsCondition = () => {
 
   useEffect(() => {
     if (termsConditon) {
-      setContent(termsConditon?.data?.attributes?.termsText);
+      setContent(termsConditon?.data?.attributes[0]?.content);
     }
   }, [termsConditon]);
 
+  console.log(termsConditon?.data?.attributes[0]?.content);
+
   const dataContent = {
-    id: id,
-    text: content,
+    content: content,
   };
 
   const handleEditTermCondition = async () => {
@@ -42,9 +44,10 @@ const EditTermsCondition = () => {
       const res = await updateTermcondition(dataContent).unwrap();
       // console.log(res);
 
-      if (res?.statusCode == 200) {
-        toast.success(res?.message);
-      }
+      // if (res?.code == 200) {
+      //   console.log(res);
+      // }
+      toast.success(res?.message);
       setTimeout(() => {
         navigate("/dashboard/settings/termcondition");
       }, 1000);
@@ -58,7 +61,18 @@ const EditTermsCondition = () => {
 
   return (
     <div className="mt-8 sm:mx-6">
-      <Toaster reverseOrder={false} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <Link
         to="/dashboard/settings/termcondition"
         className="flex items-center gap-2"
@@ -112,14 +126,15 @@ const EditTermsCondition = () => {
       >
         <div className="mt-6">
           <JoditEditor
-          className="bg-black"
+            className="bg-black"
             ref={editor}
-            value={content}
+            // value={content}
+            value={termsConditon?.data?.attributes[0]?.content}
             onBlur={(newContent) => {
               const plainText = stripHtmlTags(newContent); // Strips HTML tags
               setContent(plainText); // Sets only the plain text to content
             }}
-            onChange={() => {}}
+            onChange={() => { }}
           />
         </div>
         <div className="text-right mt-6">

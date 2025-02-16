@@ -4,7 +4,7 @@ const adminLogin = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         adminLogin: builder.mutation({
             query: (loginData) => ({
-                url: `/users/signIn`,
+                url: `/auth/login`,
                 method: "POST",
                 body: loginData
             })
@@ -12,4 +12,4 @@ const adminLogin = apiSlice.injectEndpoints({
     })
 })
 
-export const {useAdminLoginMutation} = adminLogin;
+export const { useAdminLoginMutation } = adminLogin;

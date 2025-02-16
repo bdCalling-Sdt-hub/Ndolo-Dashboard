@@ -1,11 +1,11 @@
 import { apiSlice } from "../../api/apiSlice";
 
 
-const verifyOtp = apiSlice.injectEndpoints({
+const verifyOtp2 = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        verifyOtp: builder.mutation({
+        verifyOtp2: builder.mutation({
             query: (value) => ({
-                url: `/users/verify-code`,
+                url: `/auth/verify-email`,
                 method: "POST",
                 body: value
             })
@@ -13,4 +13,4 @@ const verifyOtp = apiSlice.injectEndpoints({
     })
 })
 
-export const {useVerifyOtpMutation} = verifyOtp;
+export const { useVerifyOtp2Mutation } = verifyOtp2;

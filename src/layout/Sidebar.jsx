@@ -117,7 +117,7 @@ const Sidebar = () => {
               <FaUsers className="h-7 w-7 lg:h-5 lg:w-5" />
               <span className="hidden ml-2 sm:block">Add Admins</span>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="adminchangepassword"
               className={({ isActive }) =>
                 isActive
@@ -127,7 +127,7 @@ const Sidebar = () => {
             >
               <RiLockPasswordLine className="h-7 w-7 lg:h-5 lg:w-5" />
               <span className="hidden ml-2 sm:block"> Admins Request</span>
-            </NavLink>
+            </NavLink> */}
 
             {/* <NavLink
               to="subscription"

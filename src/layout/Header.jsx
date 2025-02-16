@@ -121,6 +121,8 @@ const Header = () => {
     </Menu>
   );
 
+  const baseUrl = url;
+
   return (
     <div className="sm:w-auto w-full rounded-md bg-white">
       <Toaster reverseOrder={false} />
@@ -129,7 +131,7 @@ const Header = () => {
           <div>
             <div className="flex items-center justify-start gap-1 mb-2">
               <p className="text-3xl font-semibold text-[#430750]">Welcome,</p>
-              <h1>{profile?.data?.attributes?.name}</h1>
+              {/* <h1>{profile?.data?.attributes?.fullName}</h1> */}
             </div>
             <p className="sm:text-left text-center text-xl text-gray-500">Have a nice day at work</p>
           </div>
@@ -137,12 +139,12 @@ const Header = () => {
             <img className="max-w-48 mx-auto" src={dashboard_welcome_Image} alt="" />
           </div> */}
         </div>
-        <Link to={"/dashboard/profile"} className=" lg:col-span-1 flex items-center md:justify-end sm:flex-row flex-col gap-5  p-5 min-w-96 cursor-pointer">
-          <div className="sm:text-right text-center">
-            <h3 className="text-2xl font-semibold text-[#430750]">Jane Cooper</h3>
-            <p className="font-semibold">Super Admin</p>
+        <Link to={"/dashboard/profile"} className=" lg:col-span-1 flex items-center  md:justify-end sm:flex-row flex-col gap-5  p-5 min-w-96 cursor-pointer">
+          <div className="text-right ">
+            <h3 className="text-2xl font-semibold text-[#430750]">{profile?.data?.attributes?.fullName}</h3>
+            <p className="font-semibold">{profile?.data?.attributes?.role}</p>
           </div>
-          <img className="w-14 rounded-full border-4 border-[#430750]" src={User_profile_image} alt="" />
+          <img className="w-14  rounded-full object-cover" src={profile?.data?.attributes?.profileImage ? `${baseUrl}${profile?.data?.attributes?.profileImage}` : '/Dashboard/User_Profile.png'} alt="Profile" />
         </Link>
       </div>
 

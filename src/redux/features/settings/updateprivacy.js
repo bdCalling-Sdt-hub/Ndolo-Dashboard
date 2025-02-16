@@ -4,15 +4,15 @@ import { apiSlice } from "../../api/apiSlice";
 const updatePrivacy = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         updatePrivacy: builder.mutation({
-            query: (data) => ({
-                url: `/seating/updatePrivacy`,
-                method: 'PATCH',
-                body: data
+            query: (content) => ({
+                url: `/info/privacy-policy`,
+                method: 'POST',
+                body: content
             }),
-            invalidatesTags: [{type: "Settings"}]
+            invalidatesTags: [{ type: "Settings" }]
         })
     }),
-    
+
 })
 
-export const {useUpdatePrivacyMutation} = updatePrivacy;
+export const { useUpdatePrivacyMutation } = updatePrivacy;

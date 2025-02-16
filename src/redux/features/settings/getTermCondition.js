@@ -4,8 +4,8 @@ import { apiSlice } from "../../api/apiSlice";
 const getTermCondition = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getTermCondition: builder.query({
-            query: () => `/seating/showTerms`,
-            providesTags: [{ type: "Terms" }]  
+            query: () => `/info/terms-services`,
+            providesTags: [{ type: "Terms" }]
         })
     })
 })

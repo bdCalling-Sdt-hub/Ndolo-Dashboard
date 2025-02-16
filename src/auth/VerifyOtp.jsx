@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import { Button } from "antd";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import { useVerifyOtpMutation } from "../redux/features/auth/verifyOtp";
+import { useVerifyOtp2Mutation } from "../redux/features/auth/verifyOtp";
 import toast, { Toaster } from "react-hot-toast";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
@@ -21,18 +21,23 @@ const VerifyOtp = () => {
 
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  const [verifyOtp] = useVerifyOtpMutation();
+  const [verifyOtp] = useVerifyOtp2Mutation();
 
   const verifyData = {
-    code: otp,
+    oneTimeCode: otp,
     email: email,
   };
 
   const sendOtp = async () => {
-    try {
-      const res = await verifyOtp(verifyData).unwrap();
 
-      if (res?.statusCode == 200) {
+    console.log(verifyData);
+
+    try {
+      // const res = await verifyOtp(verifyData).unwrap();
+      const res = await verifyOtp(verifyData).unwrap();
+      console.log(res);
+
+      if (res?.code == 200) {
         toast.success(res?.message);
         setTimeout(() => {
           navigate(`/updatepassword?email=${email}`);

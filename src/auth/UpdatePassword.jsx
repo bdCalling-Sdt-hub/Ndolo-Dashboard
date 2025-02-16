@@ -4,7 +4,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from './../../public/image/logo.png';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
-import { useUpdatePasswordMutation } from '../redux/features/auth/updatePassword';
+import { useUpdatePasswordAdminMutation } from '../redux/features/auth/updatePassword';
 import toast, { Toaster } from 'react-hot-toast';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 
@@ -17,7 +17,7 @@ const UpdatePassword = () => {
   const queryParams = new URLSearchParams(location.search);
   const email = queryParams.get('email');
 
-  const [reset, { isLoading }] = useUpdatePasswordMutation();
+  const [reset, { isLoading }] = useUpdatePasswordAdminMutation();
 
   const handlePasswordVisibility = () => setPasswordVisible(!passwordVisible);
   const handleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
@@ -38,7 +38,7 @@ const UpdatePassword = () => {
     };
     try {
       const res = await reset(resetData).unwrap();
-      if (res?.statusCode == 200) {
+      if (res?.code == 200) {
         toast.success(res?.message);
         setTimeout(() => {
           navigate('/');
@@ -46,6 +46,7 @@ const UpdatePassword = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error?.data?.message);
     }
   };
 

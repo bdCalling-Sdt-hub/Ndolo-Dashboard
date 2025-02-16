@@ -5,8 +5,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.guidegadget.com/api/v1",
-    // baseUrl: "http://192.168.10.168:5050/api/v1",
+    // baseUrl: "https://api.guidegadget.com/api/v1",
+    baseUrl: "https://shadat9090.sobhoy.com/api/v1",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("token");
       // console.log("9 baseApi", token);
@@ -16,7 +16,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
- 
-  tagTypes: ["User", "Service", "Equipment", "Contactus", "Settings","Terms", "Waiver","Licence","Manifest"],
+
+  tagTypes: ["User", "Admin", "Equipment", "Contactus", "Settings", "Terms", "Waiver", "Licence", "Manifest"],
   endpoints: () => ({}),
 });

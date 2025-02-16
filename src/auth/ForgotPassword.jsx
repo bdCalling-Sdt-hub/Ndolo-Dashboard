@@ -13,26 +13,27 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [forgotpassword] = useForgotPasswordMutation();
-
+  
   const handleForgotPassword = async (values) => {
-    // console.log("Received values:", values);
-    // navigate(`/verifyotp`);
     try {
-      const res = await forgotpassword(values).unwrap();
-      // console.log(res);
+      const email = { email: values?.email };
+      console.log("Request Payload:", email); // ✅ Log request data
 
-      if (res?.statusCode == 200) {
+      const res = await forgotpassword(email).unwrap();
+      console.log("Response:", res); // ✅ Log API response
+
+      if (res?.code === 200) {
         toast.success(res?.message);
         setTimeout(() => {
           navigate(`/verifyotp?email=${values?.email}`);
         }, 1000);
+      } else {
+        toast.error(res?.message || "Something went wrong.");
       }
     } catch (error) {
-      //  console.log(error);
-      setError(error?.data?.message);
+      console.error("Forgot Password Error:", error); // ✅ Log the error in the console
+      toast.error(error?.data?.message || "Failed to send reset email. Try again.");
     }
-
-    // Handle form submission here
   };
 
   return (
