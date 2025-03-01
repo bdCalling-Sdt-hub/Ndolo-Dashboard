@@ -36,74 +36,53 @@ const Login = () => {
   };
 
   return (
-    <div className="md:mt-20 mt-10 md:w-[80%] w-[90%] mx-auto bg-white rounded-[8px]">
+    <div className="min-h-screen">
       <Toaster reverseOrder={false} />
 
-      <div className="md:grid grid-cols-2 min-h-[80vh]">
-        <div className="h-full bg-[#fff3e6] hidden md:flex justify-center items-center">
-          <div className="w-1/3 mx-auto">
-            <img src={logo} alt="Signin" className="w-full h-full object-cover" />
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="flex items-center justify-center h-screen relative">
+          <img className="absolute top-0 left-0" src="/All/login-1.png" alt="" />
+          <div className="bg-[#d4b2ff] w-[200px] h-[200px] flex items-center justify-center">
+            <h3 className="text-5xl ">Logo</h3>
           </div>
+          <img className="absolute bottom-0 right-0" src="/All/login-2.png" alt="" />
         </div>
-
-        <div className="md:p-10 p-5 bg-[#430750] flex justify-center items-center">
-          <form onSubmit={onSubmit} className="login-form md:w-3/4 mx-auto bg-[#fff3e6] p-5 rounded-xl">
-            <h3 className="text-center mb-4 text-2xl font-semibold">Sign In</h3>
-
-            {/* Email Field */}
-            <div className="mb-4">
-              <p className="mb-3 font-semibold">Email *</p>
+        <div className="bg-[url('/All/login-bg.png')] h-screen w-full flex items-center bg-no-repeat bg-cover bg-center">
+          <form className="w-2/3 p-5 bg-[#00000090] rounded-2xl mx-auto" action="">
+            <h2 className="mb-5 text-3xl font-semibold text-white text-center">Sign In</h2>
+            <label className="block mb-6" htmlFor="">
+              <span className="text-white mb-2 block">Email</span>
               <input
+                className="block border border-secondary py-3 w-full px-3 rounded-lg bg-white "
                 type="email"
-                placeholder="Enter your email"
-                className="w-full p-2 mt-3 border rounded"
-                autoComplete="off"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
-            </div>
-
-            {/* Password Field */}
-            <div className="mb-4">
-              <p className="mb-3 font-semibold">Password *</p>
+            </label>
+            <label className="block mb-6" htmlFor="">
+              <span className="text-white mb-2 block">Password</span>
               <input
+                className="block border border-secondary py-3 w-full px-3 rounded-lg bg-white "
                 type="password"
-                placeholder="Enter your password"
-                className="w-full p-2 mt-3 border rounded"
-                autoComplete="off"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
+            </label>
+
+            <div>
+              <Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)}>
+                <span className="text-white">Remember me</span>
+              </Checkbox>
+              <Link className="text-white float-right" to="/forgotpassword">Forgot Password?</Link>
             </div>
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex justify-between items-center">
-              <label className="flex items-center gap-2">
-                <Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />
-                Remember me
-              </label>
-              <Link to="/forgotpassword">
-                <p className="cursor-pointer text-[14px] font-medium text-[#00BF63]">Forgot password?</p>
-              </Link>
-            </div>
-
-            {/* Error Message */}
-            {error && <p className="text-red-500 font-medium mt-3">{error}</p>}
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="block w-full h-[52px] px-2 py-4 mt-4 text-white bg-[#00A7D1] rounded-lg"
-              disabled={isLoading}
-            >
-              {isLoading ? "Logging in..." : "Log in"}
-            </button>
+            <button className="block border border-[#6d37b5] py-3 w-full px-3 rounded-lg bg-[#6d37b5] text-white font-semibold mt-5" type="submit">Login</button>
           </form>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

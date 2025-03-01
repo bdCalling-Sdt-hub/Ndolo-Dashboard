@@ -1,141 +1,86 @@
-import React, { useState } from 'react';
-import { Form, Input, Button } from 'antd';
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { useLocation, useNavigate } from 'react-router-dom';
-import logo from './../../public/image/logo.png';
-import { MdOutlineArrowBackIos } from 'react-icons/md';
-import { useUpdatePasswordAdminMutation } from '../redux/features/auth/updatePassword';
-import toast, { Toaster } from 'react-hot-toast';
-import { FaArrowLeftLong } from 'react-icons/fa6';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Checkbox } from "antd"; // Keeping Ant Design Checkbox for styling consistency
+import toast, { Toaster } from "react-hot-toast";
+import logo from "./../../public/image/logo.png";
+import { useAdminLoginMutation } from "../redux/features/auth/Login";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const UpdatePassword = () => {
-  const [form] = Form.useForm();
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get('email');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+  const [error, setError] = useState("");
+  const [adminLogin, { isLoading }] = useAdminLoginMutation();
 
-  const [reset, { isLoading }] = useUpdatePasswordAdminMutation();
+  // Handle Form Submission
+  const onSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form refresh
+    console.log("Form Data:", { email, password }); // ✅ Console log form data
 
-  const handlePasswordVisibility = () => setPasswordVisible(!passwordVisible);
-  const handleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
-
-  const validateConfirmPassword = (rule, value) => {
-    const { password } = form.getFieldsValue();
-    if (value && value !== password) {
-      return Promise.reject('Passwords do not match!');
-    }
-    return Promise.resolve();
-  };
-
-  const resetPassword = async (values) => {
-    const { password } = values;
-    const resetData = {
-      password,
-      email,
-    };
     try {
-      const res = await reset(resetData).unwrap();
-      if (res?.code == 200) {
+      const res = await adminLogin({ email, password }).unwrap();
+      console.log(res);
+      if (res?.code === 200) {
+        console.log(res?.data?.tokens);
         toast.success(res?.message);
-        setTimeout(() => {
-          navigate('/');
-        }, 1000);
+        localStorage.setItem("token", res?.data?.attributes?.tokens?.access?.token);
+        localStorage.setItem("user", JSON.stringify(res?.data));
+        setTimeout(() => navigate("/dashboard/home"), 500);
+      } else {
+        setError("Invalid login credentials");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.data?.message);
+    } catch (err) {
+      setError(err?.data?.message || "Login failed. Please try again.");
     }
   };
 
   return (
-    <div className="md:mt-20 mt-10 md:w-[80%] w-[90%] mx-auto bg-white rounded-[8px]">
-      <Toaster position="top-center" reverseOrder={false} />
-      <div className="md:grid grid-cols-2 min-h-[80vh]">
-        <div className="h-full bg-[#fff3e6] hidden md:flex justify-center items-center">
-          <div className="w-1/3 mx-auto">
-            <img src={logo} alt="Signin" className="w-full h-full object-cover" />
+    <div className="min-h-screen">
+      <Toaster reverseOrder={false} />
+
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="flex items-center justify-center h-screen relative">
+          <img className="absolute top-0 left-0" src="/All/login-1.png" alt="" />
+          <div className="bg-[#d4b2ff] w-[200px] h-[200px] flex items-center justify-center">
+            <h3 className="text-5xl ">Logo</h3>
           </div>
+          <img className="absolute bottom-0 right-0" src="/All/login-2.png" alt="" />
         </div>
-        <div className="p-5 sm:p-10 bg-[#430750] flex justify-center items-center">
-          <div className="bg-[#fff3e6] px-5 py-10 rounded-xl w-full max-w-md">
-            <div>
-              <div className="flex flex-col justify-center items-center mb-5">
-                <h2 className="flex items-center gap-2 text-2xl font-semibold">
-                  <FaArrowLeftLong /> Verify Email
-                </h2>
-                <p>Please enter your email address to reset your password.</p>
-              </div>
+        <div className="bg-[url('/All/login-bg.png')] h-screen w-full flex items-center bg-no-repeat bg-cover bg-center">
+          <form className="w-2/3 p-5 bg-[#00000090] rounded-2xl mx-auto" action="">
+            <h2 className="mb-5 text-3xl font-semibold text-white text-center flex items-center gap-2 justify-center"> <Link to={'/forgotpassword'} ><FaArrowLeft /> </Link> Reset Password</h2>
+            <p className="mb-5 text-gray-400 text-center">Your password must be 8-10 character long.</p>
+            <label className="block my-6" htmlFor="">
+              <span className="text-white mb-2 block">New Password</span>
+              <input
+                className="block border border-secondary py-3 w-full px-3 rounded-lg bg-white "
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+            <label className="block my-6" htmlFor="">
+              <span className="text-white mb-2 block">Confirm Password</span>
+              <input
+                className="block border border-secondary py-3 w-full px-3 rounded-lg bg-white "
+                type="password"
+                placeholder="Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </label>
 
-              <Form
-                form={form}
-                layout="vertical"
-                className="mt-5"
-                onFinish={resetPassword}
-              >
-                <Form.Item
-                  label="New Password"
-                  name="password"
-                  rules={[{ required: true, message: 'Please input your new password!' }]}
-                >
-                  <Input.Password
-                    className="w-full mb-4 bg-[#E6F9EF] h-12 rounded-[6px]"
-                    placeholder="New password"
-                    iconRender={(visible) =>
-                      visible ? (
-                        <EyeOutlined onClick={handlePasswordVisibility} />
-                      ) : (
-                        <EyeInvisibleOutlined onClick={handlePasswordVisibility} />
-                      )
-                    }
-                  />
-                </Form.Item>
 
-                <Form.Item
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  rules={[
-                    { required: true, message: 'Please confirm your new password!' },
-                    { validator: validateConfirmPassword },
-                  ]}
-                >
-                  <Input.Password
-                    className="w-full mb-4 bg-[#E6F9EF] h-12 rounded-[6px]"
-                    placeholder="Confirm Password"
-                    iconRender={(visible) =>
-                      visible ? (
-                        <EyeOutlined onClick={handleConfirmPasswordVisibility} />
-                      ) : (
-                        <EyeInvisibleOutlined onClick={handleConfirmPasswordVisibility} />
-                      )
-                    }
-                  />
-                </Form.Item>
 
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="block w-full h-[52px] px-2 py-4 mt-2 !text-white !bg-[#00A7D1]"
-                >
-                  Update Password
-                </Button>
-              </Form>
-            </div>
-
-            <div className="flex justify-between items-center mt-4 sm:mt-6">
-              <small className="text-[14px] sm:text-[16px] font-normal">
-                Didn’t receive the code?
-              </small>
-              <small className="text-[14px] sm:text-[16px] font-medium text-[#00BF63] cursor-pointer">
-                Resend
-              </small>
-            </div>
-          </div>
+            <button className="block border border-[#6d37b5] py-3 w-full px-3 rounded-lg bg-[#6d37b5] text-white font-semibold mt-5" type="submit">Change Password</button>
+          </form>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

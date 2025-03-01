@@ -1,6 +1,6 @@
 
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "./../../public/image/logo.png";
+import logo from "./../../public/All/logo.png";
 
 import {
   FaDollarSign,
@@ -59,11 +59,11 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="lg:w-[250px] xl:w-[300px] md:w-[200px] sm:w-[120px] w-[70px] flex flex-col justify-between bg-[#ece6ee] h-full min-h-screen rounded-md">
+    <div className="lg:w-[250px] xl:w-[300px] md:w-[200px] sm:w-[120px] w-[70px] flex flex-col justify-between bg-[#6d37b5] h-full min-h-screen  ">
       <div>
-        <Link to={'/dashboard/home'} className="p-[5px] grid justify-items-stretch  sm:p-[16px]">
+        <Link to={'/dashboard/home'} className="grid justify-items-stretch  mb-10">
           <img
-            className="w-full sm:w-3/4 mx-auto  rounded-lg justify-self-center"
+            className="w-full  mx-auto justify-self-center"
             src={logo}
             alt="Logo"
           />

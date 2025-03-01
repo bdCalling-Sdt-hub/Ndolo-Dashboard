@@ -124,9 +124,9 @@ const Header = () => {
   const baseUrl = url;
 
   return (
-    <div className="sm:w-auto w-full rounded-md bg-white">
+    <div className="sm:w-auto w-full bg-white px-5">
       <Toaster reverseOrder={false} />
-      <div className="flex bg-[#ece6ee] rounded-lg">
+      <div className="flex bg-[#6d37b5] rounded-lg">
         <div className="w-full hidden md:flex justify-between items-center  sm:p-5 p-5 ">
           <div>
             <div className="flex items-center justify-start gap-1 mb-2">
